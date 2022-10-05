@@ -1,12 +1,15 @@
 'use strict';
 
-let hub = require('../hub');
+let eventpool = require('../eventpool');
 
-module.exports = (payload) =>  {
-  setTimeout((storeName) => {
-    console.log(`DRIVER: picked up ${payload.orderID}`)
-    hub.emit('IN-TRANSIT', payload)
-    console.log(`DRIVER: delivered ${payload.orderID}`)
-    hub.emit('DELIVERED', payload)
-  }, 1000);
+module.exports = (payload) => {
+  setTimeout(() => {
+    console.log(`DRIVER: picked up ${payload.orderID}`),
+    eventpool.emit('IN-TRANSIT', payload);
+  }, 2000);
+
+  setTimeout(() => {
+    console.log(`DRIVER: delivered ${payload.orderID}`),
+    eventpool.emit('DELIVERED', payload)
+  }, 8000)
 }
